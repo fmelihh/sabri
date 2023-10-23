@@ -1,5 +1,4 @@
 import uvicorn
-import fastapi
 from dotenv import load_dotenv
 
 from api.routes import *
