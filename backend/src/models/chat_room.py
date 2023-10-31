@@ -7,5 +7,6 @@ from .user import User
 
 class ChatRoom(Document):
     name: str
-    created_by: User
+    chat: List[str] = Field(default=[])
+    users: List[User] = Field(default=[])
     max_capacity: int = Field(default=30)
