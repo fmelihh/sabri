@@ -1,12 +1,11 @@
 from pydantic import Field
 from beanie import Document
 
-from .user import User
-from .message import Message
+from schemas.message import MessageSchema
 
 
 class ChatRoom(Document):
     name: str
-    users: list[User] = Field(default=[])
-    chat: list[Message] = Field(default=[])
+    user_ids: list[str] = Field(default=[])
+    chat: list[MessageSchema] = Field(default=[])
     max_capacity: int = Field(default=30)
