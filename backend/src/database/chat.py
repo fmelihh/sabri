@@ -28,4 +28,3 @@ async def create_default_chat_room():
     default = ChatRoom(name="alpha")
     await ChatRoom.find({ChatRoom.name: default.name}).delete()
     await default.insert()
-

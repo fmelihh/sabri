@@ -1,13 +1,13 @@
-from pydantic import BaseModel, field_validator, ValidationError, EmailStr
+from pydantic import BaseModel, field_validator, ValidationError, EmailStr, Field
 
 
 class UserSchema(BaseModel):
     age: int
     name: str
-    password: str
     nickname: str
     email: EmailStr
     family_name: str
+    password: str | None = Field(default=None)
 
     @field_validator("age")
     @classmethod

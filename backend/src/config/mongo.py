@@ -8,6 +8,4 @@ from models.chat_room import ChatRoom
 
 async def initialize_mongo():
     client = AsyncIOMotorClient(os.environ["MONGODB_URL"])
-    await init_beanie(
-        database=client.db_name, document_models=[ChatRoom, User]
-    )
+    await init_beanie(database=client.db_name, document_models=[ChatRoom, User])
