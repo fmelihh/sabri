@@ -14,6 +14,9 @@ pymongo = "^4.5.0"
 python-dotenv = "^1.0.0"
 motor = "^3.3.1"
 beanie = "^1.23.0"
+python-jose = {version = "^3.3.0", extras = ["cryptography"]}
+passlib = {version = "^1.7.4", extras = ["bcrypt"]}
+email-validator = "^2.1.0.post1"
 
 
 [build-system]
