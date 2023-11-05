@@ -1,22 +1,23 @@
 from fastapi import APIRouter, WebSocket
+from starlette.websockets import WebSocketDisconnect
 
-from models.user import User
-from database.chat import add_user_to_chat_room
 from ..app import backend_app
+from authentication.dependencies import oauth_v2_dependency
 
 chat_router = APIRouter()
 
 
-@chat_router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, user_name: str, email: str):
-    print(id(websocket))
-    await add_user_to_chat_room(
-        chat_room_name="test", user=User(name=user_name, email=email)
-    )
-    await websocket.accept()
+@chat_router.websocket("/ws/{channel_name}/{token}")
+async def ws_broadcast(websocket: WebSocket, channel_name: str, token: str):
+    user = await oauth_v2_dependency(token=token)
+    await backend_app.chat_manager.connect(websocket, user, channel_name)
     while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message text was: {data}")
+        try:
+            message = await websocket.receive_text()
+            await backend_app.chat_manager.broadcast(message)
+        except WebSocketDisconnect:
+            await backend_app.chat_manager.disconnect(websocket, user, channel_name)
+            return
 
 
 backend_app.include_router(router=chat_router, prefix="/chat")
