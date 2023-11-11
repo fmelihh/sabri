@@ -6,7 +6,7 @@ from ..app import backend_app
 from schemas.user import UserSchema
 from schemas.token import TokenSchema
 from database.user import set_new_user
-from authentication.dependencies import oauth_v2_dependency
+from authentication.dependencies import user_dependency
 from authentication.registry import retrieve_jwt_access_token
 
 auth_router = APIRouter()
@@ -26,7 +26,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
 
 @auth_router.get("/me", response_model=UserSchema)
-async def me(user: User = Depends(oauth_v2_dependency)):
+async def me(user: User = Depends(user_dependency)):
     return UserSchema(**user.model_dump()).model_dump(exclude={"password"})
 
 

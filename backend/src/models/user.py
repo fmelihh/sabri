@@ -14,5 +14,5 @@ class User(Document):
     is_banned: bool = Field(default=False)
     scopes: list[str] = Field(default=[])
     registered_channels: list[str] = Field(default=[])
-    updated_at: datetime.datetime | None = Field(default=datetime.datetime.now())
     created_at: datetime.datetime = Field(default=datetime.datetime.now())
+    updated_at: datetime.datetime | None = Field(default=datetime.datetime.now())

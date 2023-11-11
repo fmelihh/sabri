@@ -1,28 +1,55 @@
-from fastapi import Depends
+from fastapi import Depends, status
+from fastapi.security import SecurityScopes
 from fastapi.exceptions import HTTPException
-from fastapi.security import OAuth2PasswordBearer
 
+from models.user import User
+from .oauth import OAuthSchema
 from database.user import get_user
 from .token import decode_access_token
+from schemas.token import TokenPayloadSchema
 
-oauth2_schema = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
-
-async def oauth_v2_dependency(token: str = Depends(oauth2_schema)):
-    credentials_exception = HTTPException(
-        status_code=401,
-        detail="could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+async def token_dependency(token: str = Depends(OAuthSchema)) -> TokenPayloadSchema:
     payload = decode_access_token(token=token)
     if payload is None:
-        raise credentials_exception
+        raise HTTPException(
+            status_code=401,
+            detail="could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
-    user = await get_user(email=payload.sub)
+    return payload
+
+
+async def user_dependency(
+    token_payload: TokenPayloadSchema = Depends(token_dependency),
+):
+    user = await get_user(email=token_payload.sub)
     if user is None:
-        raise credentials_exception
+        raise HTTPException(
+            status_code=401,
+            detail="could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
     if user.is_banned is True:
         raise HTTPException(status_code=400, detail="inactive user")
 
     return user
+
+
+async def permission(
+    scopes: SecurityScopes, user: User = Depends(user_dependency)
+) -> User:
+    for scope in scopes.scopes:
+        if scope not in user.scopes:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Not enough permissions.",
+                headers={"WWW-Authenticate": f"Bearer scope= {scopes.scope_str}"},
+            )
+
+    return user
+
+
+__all__ = ["permission", "user_dependency"]

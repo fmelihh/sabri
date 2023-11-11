@@ -27,7 +27,11 @@ async def get_chat_room(room_name: str) -> ChatRoom:
     return current_chat_room
 
 
+async def create_chat_room(room_name: str, created_by: str):
+    chat_room = ChatRoom(name=room_name, created_by=created_by)
+    await ChatRoom.find({ChatRoom.name: room_name}).delete()
+    await chat_room.insert()
+
+
 async def create_default_chat_room():
-    default = ChatRoom(name="alpha")
-    await ChatRoom.find({ChatRoom.name: default.name}).delete()
-    await default.insert()
+    await create_chat_room(room_name="alpha", created_by="admin@admin.com")
