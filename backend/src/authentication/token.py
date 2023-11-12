@@ -18,6 +18,8 @@ def create_access_token(payload: TokenPayloadSchema) -> TokenSchema:
 
 def decode_access_token(token: str) -> TokenPayloadSchema | None:
     try:
+        if "Bearer" in token:
+            token = token.strip("Bearer").strip()
         payload = jwt.decode(
             token, os.environ["SECRET_KEY"], algorithms=[os.environ["ALGORITHM"]]
         )

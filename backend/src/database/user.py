@@ -32,7 +32,7 @@ async def add_default_users():
     free_user = User(
         age=25,
         name="Furkan Melih",
-        email="free_user@free_user.com",
+        email="free_user@free.com",
         password=get_password_hash("free_user"),
         nickname="free_user",
         family_name="Ercan",
@@ -51,7 +51,7 @@ async def add_default_users():
     premium_user = User(
         age=25,
         name="Furkan Melih",
-        email="premium_user@premium_user.com",
+        email="premium_user@premium.com",
         password=get_password_hash("premium_user"),
         nickname="premium_user",
         family_name="Ercan",

@@ -12,4 +12,5 @@ async def startup():
     await add_default_users()
     await create_default_chat_room()
 
+
 __all__ = ["backend_app"]

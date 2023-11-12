@@ -50,6 +50,3 @@ async def permission(
             )
 
     return user
-
-
-__all__ = ["permission", "user_dependency"]
