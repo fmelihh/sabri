@@ -19,18 +19,28 @@ async def ws_broadcast(
     while True:
         try:
             message = await websocket.receive_text()
-            await connection_manager.broadcast(message)
+            await connection_manager.broadcast(message, channel_name)
         except WebSocketDisconnect:
             await connection_manager.disconnect(websocket, user, channel_name)
             return
 
 
-@chat_router.post("/create")
-async def create(
+@chat_router.post("/create/admin/chat")
+async def create_admin_chat(
     chat_room_name: str,
     user: User = Security(
-        permission, scopes=["admin:chat:create", "premium:chat:create"]
+        permission, scopes=["admin:chat:create"]
     ),
+):
+    await create_chat_room(room_name=chat_room_name, created_by=user.email)
+
+
+@chat_router.post("/create/premium/chat")
+async def create_premium_chat(
+        chat_room_name: str,
+        user: User = Security(
+            permission, scopes=["premium:chat:create"]
+        )
 ):
     await create_chat_room(room_name=chat_room_name, created_by=user.email)
 
