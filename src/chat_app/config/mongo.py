@@ -6,6 +6,6 @@ from ..models.user import User
 from ..models.chat_room import ChatRoom
 
 
-async def initialize_mongo():
+async def initialize_mongo():  # pragma no cover
     client = AsyncIOMotorClient(os.environ["MONGODB_URL"])
     await init_beanie(database=client.db_name, document_models=[ChatRoom, User])
