@@ -1,12 +1,11 @@
 from starlette.websockets import WebSocketDisconnect
-from fastapi import APIRouter, WebSocket, Security, Depends
+from fastapi import APIRouter, WebSocket, Security
 
-from models.user import User
 from ..app import backend_app
-from database.chat import create_chat_room
-from schemas.token import TokenPayloadSchema
-from chat.connection_manager import ConnectionManager
-from authentication.dependencies import user_dependency, token_dependency, permission
+from ...models.user import User
+from ...database.chat import create_chat_room
+from ...chat.connection_manager import ConnectionManager
+from ...authentication.dependencies import user_dependency, token_dependency, permission
 
 chat_router = APIRouter()
 

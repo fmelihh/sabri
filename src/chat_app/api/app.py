@@ -1,7 +1,7 @@
 import fastapi
-from config.mongo import initialize_mongo
-from database.user import add_default_users
-from database.chat import create_default_chat_room
+from ..config.mongo import initialize_mongo
+from ..database.user import add_default_users
+from ..database.chat import create_default_chat_room
 
 backend_app: fastapi.FastAPI = fastapi.FastAPI()
 

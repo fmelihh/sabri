@@ -1,7 +1,7 @@
 import os
 import datetime
 from jose import jwt, JWTError
-from schemas.token import TokenPayloadSchema, TokenSchema
+from ..schemas.token import TokenPayloadSchema, TokenSchema
 
 
 def create_access_token(payload: TokenPayloadSchema) -> TokenSchema:

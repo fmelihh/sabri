@@ -2,8 +2,8 @@ import os
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from models.user import User
-from models.chat_room import ChatRoom
+from ..models.user import User
+from ..models.chat_room import ChatRoom
 
 
 async def initialize_mongo():

@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-from models.user import User
 from ..app import backend_app
-from schemas.user import UserSchema
-from schemas.token import TokenSchema
-from database.user import set_new_user
-from authentication.dependencies import user_dependency
-from authentication.registry import retrieve_jwt_access_token
+from ...models.user import User
+from ...schemas.user import UserSchema
+from ...schemas.token import TokenSchema
+from ...database.user import set_new_user
+from ...authentication.dependencies import user_dependency
+from ...authentication.registry import retrieve_jwt_access_token
 
 auth_router = APIRouter()
 

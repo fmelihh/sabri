@@ -1,7 +1,7 @@
 import uvicorn
 from dotenv import load_dotenv
 
-from api.routes import *
+from src.chat_app.api.app import backend_app
 
 load_dotenv()
 

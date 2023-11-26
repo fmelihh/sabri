@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 
-from models.user import User
-from schemas.user import UserSchema
-from utils.hash import get_password_hash
+from ..models.user import User
+from ..schemas.user import UserSchema
+from ..utils.hash import get_password_hash
 
 
 async def set_new_user(user_modal: UserSchema):

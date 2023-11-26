@@ -2,11 +2,11 @@ from fastapi import Depends, status
 from fastapi.security import SecurityScopes
 from fastapi.exceptions import HTTPException
 
-from models.user import User
 from .oauth import OAuthSchema
-from database.user import get_user
+from ..models.user import User
+from ..database.user import get_user
 from .token import decode_access_token
-from schemas.token import TokenPayloadSchema
+from ..schemas.token import TokenPayloadSchema
 
 
 async def token_dependency(token: str = Depends(OAuthSchema)) -> TokenPayloadSchema:

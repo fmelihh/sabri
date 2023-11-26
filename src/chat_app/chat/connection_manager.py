@@ -1,8 +1,8 @@
 import threading
 from fastapi.websockets import WebSocket
 
-from models.user import User
-from database.chat import add_user_to_chat_room, remove_user_from_chat_room
+from ..models.user import User
+from ..database.chat import add_user_to_chat_room, remove_user_from_chat_room
 
 
 class Singleton(type):

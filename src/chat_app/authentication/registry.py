@@ -1,9 +1,9 @@
 from fastapi.exceptions import HTTPException
 
-from database.user import get_user
+from ..database.user import get_user
 from .token import create_access_token
-from utils.hash import verify_password
-from schemas.token import TokenPayloadSchema, TokenSchema
+from ..utils.hash import verify_password
+from ..schemas.token import TokenPayloadSchema, TokenSchema
 
 
 async def retrieve_jwt_access_token(email: str, password: str) -> TokenSchema:
