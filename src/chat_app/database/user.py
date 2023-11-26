@@ -18,7 +18,7 @@ async def get_user(email: str) -> User | None:
     return user
 
 
-async def add_default_users():
+async def add_default_users():  # pragma: no cover
     admin_user = User(
         age=25,
         name="Furkan Melih",
